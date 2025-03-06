@@ -22,17 +22,20 @@ Smart Notes Organizer is a **Next.js** web application designed to help users **
 - **Next.js 15**: For server-side rendering and optimized performance.
 - **React.js**: Component-based UI framework.
 - **Material-UI**: UI components for a modern design.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
 
 ### **Backend:**
 
 - **Next.js API Routes**: Handles API requests for notes management.
 - **Node.js & Express.js**: For backend logic and API integrations.
+- **Supabase REST API**: Used for database management and querying tables.
 
 ### **AI Tools:**
 
 - **Hugging Face Transformers**: Used for text summarization with the `facebook/bart-large-cnn` model.
 - **Sentiment Analysis API**: Analyzes the emotional tone of notes (positive, negative, neutral).
+- **Automatic Categorization API**: Assign a category based on the content of the note out of ["Work", "Personal", "Ideas", "Technology"].
+
+
 
 ---
 
@@ -40,23 +43,38 @@ Smart Notes Organizer is a **Next.js** web application designed to help users **
 
 ### **1. Clone the Repository**
 
-Clone the repository to your local machine and navigate to the project folder.
+## Clone the repository to your local machine and navigate to the project folder.
+
+git clone https://github.com/yourusername/smart-notes-organizer.git
+cd smart-notes-organizer
+
 
 ### **2. Set Up Environment Variables**
+Create a .env.local file in the root directory and add your Hugging Face API key:
 
-Create a `.env.local` file in the root directory and add your Hugging Face API key:
-SUPABASE_KEY= superbase_key
-SUPABASE_URL= superbase_url
+SUPABASE_KEY=superbase_key
+
+SUPABASE_URL=superbase_url
+
 NEXT_PUBLIC_HF_API_KEY=your_api_key_here
 
 
-### **3. Install Dependencies**
+### **3.Install Dependencies
+Install the necessary dependencies using npm:
 
-Install the necessary dependencies.
+npm install
 
-### **4. Run the Application**
 
-Start the development server. The application should now be running at `http://localhost:3000`.
+### **4. Run the Application
+
+Start the development server. The application should now be running at http://localhost:3000.
+
+npm run dev
+
+
+### **5. Running Test Cases
+
+npm run test
 
 ---
 
