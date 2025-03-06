@@ -1,6 +1,7 @@
 // app/api/notes/route.js
 import { createClient } from '@supabase/supabase-js';
-import { analyzeSentiment } from '@/app/utils/huggingface';
+import { queryHuggingFace } from '@/app/utils/huggingface';
+
 // Initialize Supabase Client
 const supabase = createClient(
   process.env.SUPABASE_URL,  // Your Supabase URL
@@ -25,7 +26,7 @@ export async function GET() {
 export async function POST(req) {
   const { content, category } = await req.json();
   // Analyze sentiment using Hugging Face API
-  const sentimentResult = await analyzeSentiment(content);
+  const sentimentResult = await queryHuggingFace('distilbert-base-uncased-finetuned-sst-2-english', content);
   console.log(sentimentResult, 'sentimentResult')
   const sentiment = sentimentResult[0][0]?.label || 'neutral';
   console.log(sentiment, 'sentiment')
@@ -58,7 +59,7 @@ export async function DELETE(req) {
 export async function PUT(req) {
   const { id, content, category } = await req.json();
   // Analyze sentiment using Hugging Face API (optional for editing)
-  const sentimentResult = await analyzeSentiment(content);
+  const sentimentResult = await queryHuggingFace('distilbert-base-uncased-finetuned-sst-2-english', content);
   console.log(sentimentResult, 'sentimentResult')
   const sentiment = sentimentResult[0][0]?.label || 'neutral';
   const { data, error } = await supabase
