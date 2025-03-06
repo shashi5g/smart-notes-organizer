@@ -62,7 +62,7 @@ export default function SummaryModal({ content }) {
                     ) : (
                         <>
                             <Typography variant="h5" paddingBottom={2} >
-                                {'Notes Summary'}
+                                {'Notes Summary BY AI'}
                             </Typography>
                             <Typography variant="body1" >
                                 {summary}
