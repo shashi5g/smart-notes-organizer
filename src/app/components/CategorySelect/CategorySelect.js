@@ -13,6 +13,7 @@ const CategorySelect = ({ category, setCategory }) => {
         <MenuItem value="Work">Work</MenuItem>
         <MenuItem value="Personal">Personal</MenuItem>
         <MenuItem value="Ideas">Ideas</MenuItem>
+        <MenuItem value="Technology">Technology</MenuItem>
       </Select>
     </FormControl>
   );

@@ -1,4 +1,3 @@
-// app/__tests__/Home.test.js
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Home from "../page";
 
@@ -13,7 +12,8 @@ describe("Home Component", () => {
         const mockNotes = [{ id: 1, content: "Test Note", category: "Work" }];
 
         fetch.mockResolvedValueOnce({
-            json: () => Promise.resolve(mockNotes),
+            ok: true, // Ensures the response is considered "successful"
+            json: async () => mockNotes, // Ensures json() returns a promise
         });
 
         render(<Home />);
@@ -28,7 +28,10 @@ describe("Home Component", () => {
             { id: 2, content: "Meeting Notes", category: "Work" },
         ];
 
-        fetch.mockResolvedValueOnce({ json: () => Promise.resolve(mockNotes) });
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockNotes,
+        });
 
         render(<Home />);
 
@@ -41,9 +44,11 @@ describe("Home Component", () => {
         expect(screen.queryByText("Shopping List")).not.toBeInTheDocument();
     });
 
-
     test("shows 'No notes found' when there are no matching notes", async () => {
-        fetch.mockResolvedValueOnce({ json: () => Promise.resolve([]) });
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            json: async () => [], // Ensure json() resolves to an empty array
+        });
 
         render(<Home />);
 

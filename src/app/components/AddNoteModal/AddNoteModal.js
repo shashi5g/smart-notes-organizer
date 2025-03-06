@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Modal, Box, Typography, Button, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import CategorySelect from "../CategorySelect/CategorySelect";
+
 import NoteInput from "../NoteInput/NoteInput";
 
 export default function AddNoteModal({ open, onClose, onAddNote }) {
     const [newNote, setNewNote] = useState("");
-    const [category, setCategory] = useState("Work");
+
     const [error, setError] = useState(""); // State for validation error
 
     const handleSubmit = () => {
@@ -16,9 +16,8 @@ export default function AddNoteModal({ open, onClose, onAddNote }) {
         }
 
         setError(""); // Clear error if valid
-        onAddNote(newNote, category);
+        onAddNote(newNote);
         setNewNote(""); // Reset input fields
-        setCategory("Work");
         onClose();
     };
 
@@ -52,7 +51,6 @@ export default function AddNoteModal({ open, onClose, onAddNote }) {
                     Add Note
                 </Typography>
 
-                <CategorySelect category={category} setCategory={setCategory} />
 
                 {/* Note Input with Validation */}
                 <NoteInput newNote={newNote} setNewNote={(value) => {
@@ -66,7 +64,9 @@ export default function AddNoteModal({ open, onClose, onAddNote }) {
                         {error}
                     </Typography>
                 )}
-
+                <Typography color="note" variant="body2" sx={{ mt: 1 }}>
+                    {'Note : We will assign a category based on the content of the note using AI'}
+                </Typography>
                 {/* Add and Close Buttons */}
                 <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mt: 3 }}>
                     <Button variant="outlined" onClick={onClose}>

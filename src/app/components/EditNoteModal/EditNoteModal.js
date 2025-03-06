@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Modal, Box, Typography, Button, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
+import CategorySelect from "../CategorySelect/CategorySelect";
 export default function EditNoteModal({ open, onClose, onEdit, note }) {
     const [editedContent, setEditedContent] = useState(note?.content || "");
     const [error, setError] = useState(""); // State for validation error
-
+    const [category, setCategory] = useState(note.category);
     // Reset edited content when the modal opens
     useEffect(() => {
         if (note) {
@@ -19,9 +19,9 @@ export default function EditNoteModal({ open, onClose, onEdit, note }) {
             setError("Note content is required.");
             return;
         }
-        console.log(note, 'note')
+        console.log(category, 'category')
         setError(""); // Clear error if valid
-        onEdit(note.id, note.category, editedContent);
+        onEdit(note.id, category, editedContent);
         onClose();
     };
 
@@ -52,6 +52,9 @@ export default function EditNoteModal({ open, onClose, onEdit, note }) {
                 <Typography variant="h6" gutterBottom>
                     Edit Note
                 </Typography>
+
+
+                <CategorySelect category={category} setCategory={setCategory} />
 
                 {/* Input Field with Validation */}
                 <TextField
