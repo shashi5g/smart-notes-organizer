@@ -19,9 +19,9 @@ export default function EditNoteModal({ open, onClose, onEdit, note }) {
             setError("Note content is required.");
             return;
         }
-
+        console.log(note, 'note')
         setError(""); // Clear error if valid
-        onEdit(note.id, editedContent);
+        onEdit(note.id, note.category, editedContent);
         onClose();
     };
 

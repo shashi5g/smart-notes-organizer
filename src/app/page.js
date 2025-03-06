@@ -48,14 +48,13 @@ export default function Home() {
   };
 
   // Edit Note
-  const handleEdit = async (id, newContent) => {
+  const handleEdit = async (id, category, newContent) => {
     // Send PUT request to update the note
     const response = await fetch("/api/notes", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, content: newContent }),
+      body: JSON.stringify({ id, content: newContent, category }),
     });
-
     // Check if the request was successful
     if (!response.ok) {
       // Handle the error (you can display a message to the user if needed)

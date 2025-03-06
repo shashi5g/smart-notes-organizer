@@ -74,5 +74,5 @@ test('clicking Save in the EditNoteModal saves the edited note', () => {
     fireEvent.click(saveButton);
 
     // Verify that the onEdit function was called with the updated note content
-    expect(mockOnEdit).toHaveBeenCalledWith(1, 'Updated note content');
+    expect(mockOnEdit).toHaveBeenCalledWith(1, 'Work', 'Updated note content');
 });

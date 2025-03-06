@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import EditNoteModal from '../EditNoteModal'; // Adjust the import path if needed
 
 test('should open modal and allow editing note content', () => {
-    const note = { id: 1, content: 'Initial note content' };
+    const note = { id: 1, category: 'Work', content: 'Initial note content', };
     const onClose = jest.fn();
     const onEdit = jest.fn();
 
@@ -31,14 +31,16 @@ test('should open modal and allow editing note content', () => {
     fireEvent.click(saveButton);
 
     // Verify that the onEdit function was called with the correct arguments
-    expect(onEdit).toHaveBeenCalledWith(1, 'Updated note content');
+    expect(onEdit).toHaveBeenCalledWith(1, 'Work', 'Updated note content');
 
     // Verify that the modal closed after clicking save
     expect(onClose).toHaveBeenCalled();
 });
 
 test('should close modal without saving on "Cancel" button click', () => {
-    const note = { id: 1, content: 'Initial note content' };
+    const note = {
+        id: 1, category: 'Work', content: 'Initial note content',
+    };
     const onClose = jest.fn();
     const onEdit = jest.fn();
 
@@ -61,7 +63,7 @@ test('should close modal without saving on "Cancel" button click', () => {
 });
 
 test('should not call onEdit if the content is empty or only spaces', () => {
-    const note = { id: 1, content: 'Initial note content' };
+    const note = { id: 1, category: 'Work', content: 'Initial note content', };
     const onClose = jest.fn();
     const onEdit = jest.fn();
 

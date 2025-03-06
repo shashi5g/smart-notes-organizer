@@ -60,6 +60,11 @@ export async function PUT(req) {
   const { id, content, category } = await req.json();
 
   try {
+    // Validate the input fields
+    if (!id || !content || !category) {
+      return new Response(JSON.stringify({ error: 'All fields are required.' }), { status: 400 });
+    }
+
     // Analyze sentiment using Hugging Face API (optional for editing)
     const sentimentResult = await queryHuggingFace('distilbert-base-uncased-finetuned-sst-2-english', content);
     console.log(sentimentResult, 'sentimentResult');
@@ -72,18 +77,21 @@ export async function PUT(req) {
       .update({ content, category, sentiment })
       .match({ id });
 
-    // Handle errors during the update operation
+    // If update fails, return error
     if (error) {
+      console.error('Update Error:', error);
       return new Response(JSON.stringify({ error: error.message }), { status: 500 });
     }
 
-    // Fetch all updated notes from the database
+    // Fetch all updated notes from the database after the update
     const { data: allNotes, error: fetchError } = await supabase
       .from('notes')
-      .select('*').order('created_at', { ascending: false });
+      .select('*')
+      .order('created_at', { ascending: false });
 
-    // Handle errors during the fetch operation
+    // If fetching fails, return error
     if (fetchError) {
+      console.error('Fetch Error:', fetchError);
       return new Response(JSON.stringify({ error: fetchError.message }), { status: 500 });
     }
 
