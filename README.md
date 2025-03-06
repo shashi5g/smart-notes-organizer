@@ -48,8 +48,7 @@ Create a `.env.local` file in the root directory and add your Hugging Face API k
 SUPABASE_KEY= superbase_key
 SUPABASE_URL= superbase_url
 NEXT_PUBLIC_HF_API_KEY=your_api_key_here
-HUGGING_FACE_BASE_URL=base_url_for_summary_notes
-HUGGING_FACE_SENTIMENTS_ANALYSIS_URL=url_for_sentiments_analysis
+
 
 ### **3. Install Dependencies**
 
