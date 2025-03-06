@@ -18,7 +18,7 @@ const NoteCard = ({ note, onDelete, onEdit }) => {
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        minWidth: "200px",
+        minWidth: "250px",
         height: "auto",
         width: "100%",
       }}
@@ -29,6 +29,7 @@ const NoteCard = ({ note, onDelete, onEdit }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
+          minWidth: "250px",
           overflow: "hidden",
           '&:last-child': { paddingBottom: '40px' }
         }}

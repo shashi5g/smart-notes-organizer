@@ -58,18 +58,40 @@ export async function DELETE(req) {
 
 export async function PUT(req) {
   const { id, content, category } = await req.json();
-  // Analyze sentiment using Hugging Face API (optional for editing)
-  const sentimentResult = await queryHuggingFace('distilbert-base-uncased-finetuned-sst-2-english', content);
-  console.log(sentimentResult, 'sentimentResult')
-  const sentiment = sentimentResult[0][0]?.label || 'neutral';
-  const { data, error } = await supabase
-    .from('notes')
-    .update({ content, category, sentiment })
-    .match({ id });
 
-  if (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  try {
+    // Analyze sentiment using Hugging Face API (optional for editing)
+    const sentimentResult = await queryHuggingFace('distilbert-base-uncased-finetuned-sst-2-english', content);
+    console.log(sentimentResult, 'sentimentResult');
+
+    const sentiment = sentimentResult[0][0]?.label || 'neutral'; // Default to neutral if no sentiment is returned
+
+    // Update the note in the 'notes' table in Supabase
+    const { data, error } = await supabase
+      .from('notes')
+      .update({ content, category, sentiment })
+      .match({ id });
+
+    // Handle errors during the update operation
+    if (error) {
+      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
+
+    // Fetch all updated notes from the database
+    const { data: allNotes, error: fetchError } = await supabase
+      .from('notes')
+      .select('*').order('created_at', { ascending: false });
+
+    // Handle errors during the fetch operation
+    if (fetchError) {
+      return new Response(JSON.stringify({ error: fetchError.message }), { status: 500 });
+    }
+
+    // Return all updated notes
+    return new Response(JSON.stringify(allNotes), { status: 200 });
+
+  } catch (err) {
+    console.error('Error:', err);
+    return new Response(JSON.stringify({ error: 'Something went wrong' }), { status: 500 });
   }
-
-  return new Response(JSON.stringify(data), { status: 200 });
 }

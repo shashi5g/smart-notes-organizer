@@ -49,14 +49,27 @@ export default function Home() {
 
   // Edit Note
   const handleEdit = async (id, newContent) => {
-    await fetch("/api/notes", {
+    // Send PUT request to update the note
+    const response = await fetch("/api/notes", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, content: newContent }),
     });
 
-    setNotes(notes.map((note) => (note.id === id ? { ...note, content: newContent } : note)));
+    // Check if the request was successful
+    if (!response.ok) {
+      // Handle the error (you can display a message to the user if needed)
+      console.error("Failed to update note");
+      return;
+    }
+
+    // Get all updated notes from the response
+    const updatedNotes = await response.json();
+
+    // Update the state with the new list of notes
+    setNotes(updatedNotes);
   };
+
 
   // Filter Notes
   const filteredNotes = notes.filter(
